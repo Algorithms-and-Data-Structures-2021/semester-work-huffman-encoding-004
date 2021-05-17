@@ -5,7 +5,10 @@
 using namespace std;
 
 int main(int argc, char *argv[]) {
-
-//	string()
-  return 0;
+	itis::HuffmanTree* huffmanTree = new itis::HuffmanTree("asdsa");
+	cout<<huffmanTree->encode()<<"\n";
+	for (auto ht : huffmanTree->getHuffmanCoding()){
+		cout<<ht.first<<ht.second<<"\n";
+	}
+	return 0;
 }

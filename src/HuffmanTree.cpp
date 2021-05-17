@@ -1,28 +1,34 @@
+#include <iostream>
 #include "HuffmanTree.hpp"
-
+using namespace std;
 namespace itis {
 
 
 
 	HuffmanTree::HuffmanTree(string text) {
 		this->chars.resize(text.size());
+
 		for (int i = 0; i < text.size(); i++) {
-			chars[i] = text.at(i);
+			chars.at(i) = text.at(i);
 		}
+
 		this->frequency = searchFrequency(chars);
+
 		this->huffmanCode = encodeChars();
 	}
 
 
 	map<char, int> HuffmanTree::searchFrequency(vector<char> chVector) {
-		map<char, int> frequencyMap = map<char, int>();
-		for (int i = 0; i < chVector.size(); i++) {
-			frequencyMap.insert(make_pair(chVector.at(i), 0));
+		map<char, int> frequencyMap;
+		for (char ch : chVector) {
+			frequencyMap.insert(make_pair(ch, 0));
 		}
-		for (int i = 0; i < chVector.size(); i++) {
-			frequencyMap.insert(make_pair(chVector.at(i), frequencyMap.at(chVector.at(i)) + 1));
+		for (char ch : chVector) {
+			int t = frequencyMap.at(ch) + 1;
+			frequencyMap.erase(ch);
+			frequencyMap.insert(make_pair(ch, t));
 		}
-		frequencyMap;
+		return frequencyMap;
 	}
 
 
@@ -36,17 +42,17 @@ namespace itis {
 		/*
 		 * находим 2 самых редко используемых символа (векторов символов)
 		 */
-		for (auto vectorChars: communitiesCode) {
+		for (const auto& vectorChars: communitiesCode) {
 			if (leftCount >= vectorChars.second) {
 				leftCount = vectorChars.second;
 				leftChars = vectorChars.first;
 			}
 		}
 
-		for (auto vectorChars: communitiesCode) {
+		for (const auto& vectorChars: communitiesCode) {
 			if (rightCount >= vectorChars.second && vectorChars.first != leftChars) {
 				rightCount = vectorChars.second;
-				leftChars = vectorChars.first;
+				rightChars = vectorChars.first;
 			}
 		}
 
@@ -54,10 +60,14 @@ namespace itis {
 		communitiesCode.erase(rightChars);
 
 		for (auto vectorChars : leftChars) {
-			tempHoffmanCode.insert(make_pair(vectorChars, tempHoffmanCode.at(vectorChars) + "0"));
+			string  temp = tempHoffmanCode.at(vectorChars)+"0";
+			tempHoffmanCode.erase(vectorChars);
+			tempHoffmanCode.insert(make_pair(vectorChars, temp));
 		}
 		for (auto vectorChars : rightChars) {
-			tempHoffmanCode.insert(make_pair(vectorChars, tempHoffmanCode.at(vectorChars) + "1"));
+			string  temp = tempHoffmanCode.at(vectorChars)+"1";
+			tempHoffmanCode.erase(vectorChars);
+			tempHoffmanCode.insert(make_pair(vectorChars, temp));
 		}
 		//объединяем 2 вектора
 		leftChars.insert(leftChars.end(), rightChars.begin(), rightChars.end());
@@ -71,26 +81,26 @@ namespace itis {
 	}
 
 	map<char, string> HuffmanTree::encodeChars() {
-		map<char, string> HoffmanCode;
+		map<char, string> codeHoffman;
 		map<vector<char>, int> communitiesCode;
 		vector<char> community;
 		
 		for (auto fr : frequency) {
-			HoffmanCode.insert(make_pair(fr.first, ""));
+			codeHoffman.insert(make_pair(fr.first, ""));
 			community.clear();
 			community.resize(1);
 			
-			community.push_back(fr.first);
-			communitiesCode.insert(make_pair(community, 0));
+			community.at(community.size()-1) = fr.first;
+			communitiesCode.insert(make_pair(community, fr.second));
 		}
 		
-		return encodeChars(HoffmanCode, communitiesCode);
+		return encodeChars(codeHoffman, communitiesCode);
 	}
 
 	string HuffmanTree::encode() {
 		string code = "";
-		for (int i = 0; i < chars.size(); ++i) {
-			code += huffmanCode.at(chars.at(i));
+		for (auto ch : chars) {
+			code += huffmanCode.at(ch);
 		}
 		return code;
 	}
@@ -102,5 +112,6 @@ namespace itis {
 		}
 		return hC;
 	}
+
 
 }  // namespace itis

@@ -43,6 +43,7 @@ namespace itis {
 		 * перегрузка для рекурсии (ну, понял)
 		 */
 		map<char, string> encodeChars();
+
 	public:
 		/**
 		 * конструктор, который принимает строку,
@@ -61,6 +62,9 @@ namespace itis {
 		 * @return код для каждого символа в переданной строке
 		 */
 		map<char, int> getHuffmanCoding();
+
+
+
 	};
 
 }  // namespace itis
