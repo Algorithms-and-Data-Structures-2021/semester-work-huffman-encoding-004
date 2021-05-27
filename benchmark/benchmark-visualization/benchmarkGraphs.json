@@ -1,0 +1,18 @@
+{
+  "benchmarkGraphs": [
+    {
+      "title": "encode - Huffman algorithm",
+      "sources":[
+        "huffman-encode-benchmark.csv"
+      ],
+      "outputFile": "huffman-encode.png"
+    },
+    {
+      "title": "decode - Huffman algorithm",
+      "sources":[
+        "huffman-decode-benchmark.csv"
+      ],
+      "outputFile": "huffman-decode.png"
+    }
+  ]
+}
