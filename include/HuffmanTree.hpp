@@ -15,10 +15,12 @@ namespace itis {
 		 * мапа шифров для каждого символа
 		 */
 		map<char, string> huffmanCode;
+
 		/*
 		 * мапа количества встречавшихся символов
 		 */
 		map<char, int> frequency;
+
 		/*
 		 * вектор символов строки
 		 */
@@ -61,7 +63,7 @@ namespace itis {
 		/**
 		 * @return код для каждого символа в переданной строке
 		 */
-		map<char, int> getHuffmanCoding();
+		map<char, string> getHuffmanCoding();
 
 
 

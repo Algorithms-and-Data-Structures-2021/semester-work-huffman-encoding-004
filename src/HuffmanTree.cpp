@@ -1,8 +1,8 @@
 #include <iostream>
 #include "HuffmanTree.hpp"
+
 using namespace std;
 namespace itis {
-
 
 
 	HuffmanTree::HuffmanTree(string text) {
@@ -42,14 +42,14 @@ namespace itis {
 		/*
 		 * находим 2 самых редко используемых символа (векторов символов)
 		 */
-		for (const auto& vectorChars: communitiesCode) {
+		for (const auto &vectorChars: communitiesCode) {
 			if (leftCount >= vectorChars.second) {
 				leftCount = vectorChars.second;
 				leftChars = vectorChars.first;
 			}
 		}
 
-		for (const auto& vectorChars: communitiesCode) {
+		for (const auto &vectorChars: communitiesCode) {
 			if (rightCount >= vectorChars.second && vectorChars.first != leftChars) {
 				rightCount = vectorChars.second;
 				rightChars = vectorChars.first;
@@ -60,12 +60,12 @@ namespace itis {
 		communitiesCode.erase(rightChars);
 
 		for (auto vectorChars : leftChars) {
-			string  temp = tempHoffmanCode.at(vectorChars)+"0";
+			string temp = "0" + tempHoffmanCode.at(vectorChars);
 			tempHoffmanCode.erase(vectorChars);
 			tempHoffmanCode.insert(make_pair(vectorChars, temp));
 		}
 		for (auto vectorChars : rightChars) {
-			string  temp = tempHoffmanCode.at(vectorChars)+"1";
+			string temp = "1" + tempHoffmanCode.at(vectorChars);
 			tempHoffmanCode.erase(vectorChars);
 			tempHoffmanCode.insert(make_pair(vectorChars, temp));
 		}
@@ -84,16 +84,16 @@ namespace itis {
 		map<char, string> codeHoffman;
 		map<vector<char>, int> communitiesCode;
 		vector<char> community;
-		
+
 		for (auto fr : frequency) {
 			codeHoffman.insert(make_pair(fr.first, ""));
 			community.clear();
 			community.resize(1);
-			
-			community.at(community.size()-1) = fr.first;
+
+			community.at(community.size() - 1) = fr.first;
 			communitiesCode.insert(make_pair(community, fr.second));
 		}
-		
+
 		return encodeChars(codeHoffman, communitiesCode);
 	}
 
@@ -105,10 +105,10 @@ namespace itis {
 		return code;
 	}
 
-	map<char, int> HuffmanTree::getHuffmanCoding() {
-		map<char, int> hC;
-		for (auto node : huffmanCode){
-			hC.insert(make_pair(node.first,stoi(node.second)));
+	map<char, string> HuffmanTree::getHuffmanCoding() {
+		map<char, string> hC;
+		for (auto node : huffmanCode) {
+			hC.insert(make_pair(node.first, node.second));
 		}
 		return hC;
 	}
